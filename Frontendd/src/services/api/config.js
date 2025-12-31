@@ -1,6 +1,6 @@
 const DEFAULT_BASE_URL = (typeof window !== 'undefined' && window.location?.origin)
 	? `${window.location.origin}/api`
-	: 'https://white-pond-0bca16710.2.azurestaticapps.net/api';
+	: 'https://gestion-balta-fchef0bycdbef7fr.chilecentral-01.azurewebsites.net/api';
 
 const envBaseUrl = import.meta.env?.VITE_API_BASE_URL;
 
