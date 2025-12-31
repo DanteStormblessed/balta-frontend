@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/UI';
 import { Logout, Person, Key, ExpandMore } from '@mui/icons-material';
+import { apiFetch } from '../services/api/api.js';
 
 /**
  * Componente de encabezado con información del usuario y botón de logout
@@ -45,32 +46,25 @@ export default function Header() {
       }
 
       // Verificar contraseña actual
-      const loginResponse = await fetch('http://localhost:8080/api/auth/login', {
+      await apiFetch('/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        // apiFetch ya agrega Content-Type y Authorization si existe token
         body: JSON.stringify({
           correoElectronico: usuario.correoElectronico,
           password: passwordActual
         })
+      }).catch(() => {
+        throw new Error('La contraseña actual es incorrecta');
       });
 
-      if (!loginResponse.ok) {
-        throw new Error('La contraseña actual es incorrecta');
-      }
-
       // Actualizar contraseña
-      const response = await fetch(`http://localhost:8080/api/usuarios/${usuario.rut}`, {
+      await apiFetch(`/usuarios/${usuario.rut}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...usuario,
           password: nuevaPassword
         })
       });
-
-      if (!response.ok) {
-        throw new Error('Error al cambiar contraseña');
-      }
 
       setSuccess('Contraseña actualizada exitosamente');
       setTimeout(() => {
