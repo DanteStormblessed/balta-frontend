@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button } from '../../components/UI.jsx';
+import { api } from '../../services/api';
 import { 
   Add, 
   Edit, 
@@ -223,23 +224,14 @@ export default function GastosRecurrentes() {
 
   // Ejecutar un gasto en la API
   const ejecutarGastoEnAPI = async (gasto) => {
-    const response = await fetch('http://localhost:8080/api/gastos', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fecha: new Date().toISOString(),
-        monto: parseFloat(gasto.monto),
-        metodoPago: { idMetodoPago: parseInt(gasto.metodoPagoId) },
-        descripcion: `${gasto.descripcion} (Recurrente)`
-      })
+    const data = await api.gastos.registrar({
+      fecha: new Date().toISOString(),
+      monto: parseFloat(gasto.monto),
+      metodoPago: { idMetodoPago: parseInt(gasto.metodoPagoId) },
+      descripcion: `${gasto.descripcion} (Recurrente)`
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || 'Error al registrar');
-    }
-
-    return await response.json();
+    return data;
   };
 
   const marcarComoEjecutado = (id) => {
@@ -701,22 +693,20 @@ function ModalFormulario({ formData, setFormData, editando, onSubmit, onCancel }
   }, []);
 
   const cargarMetodosPago = async () => {
-  try {
-    const response = await fetch('http://localhost:8080/api/metodos-pago');
-    const data = await response.json();
-    
-    // ⭐ AGREGAR ESTO PARA VER LA ESTRUCTURA
-    console.log('Estructura del primer método:', data[0]);
-    console.log('Todos los métodos:', JSON.stringify(data, null, 2));
-    
-    setMetodosPago(Array.isArray(data) ? data : []);
-  } catch (error) {
-    console.error('Error:', error);
-    setMetodosPago([]);
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      const data = await api.metodosPago.getAll();
+      
+      console.log('Estructura del primer método:', data[0]);
+      console.log('Todos los métodos:', JSON.stringify(data, null, 2));
+      
+      setMetodosPago(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Error:', error);
+      setMetodosPago([]);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div style={{
       position: 'fixed',

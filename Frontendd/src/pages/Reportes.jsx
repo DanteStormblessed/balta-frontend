@@ -18,8 +18,7 @@ import {
   Insights,
   Analytics,
   ReceiptLong,
-  ShoppingBag,
-  InfoOutlined
+  ShoppingBag
 } from '@mui/icons-material';
 import { api } from '../services/api/index.js';
 import { API_BASE_URL } from '../services/api/config.js';
@@ -294,28 +293,28 @@ export default function Reportes() {
 
   const kpiCards = [
     {
-      key: 'ingresos-totales',
+      
       titulo: 'Ingresos totales',
       valor: `$${resumen.ingresos.toLocaleString('es-CL', { minimumFractionDigits: 0 })}`,
       icono: <AttachMoney fontSize="small" />,
       color: '#5D4037'
     },
     {
-      key: 'egresos-totales',
+     
       titulo: 'Egresos totales',
       valor: `$${resumen.egresos.toLocaleString('es-CL', { minimumFractionDigits: 0 })}`,
       icono: <ShoppingCart fontSize="small" />,
       color: '#A1887F'
     },
     {
-      key: 'saldo',
+     
       titulo: 'Saldo neto',
       valor: `$${resumen.saldo.toLocaleString('es-CL', { minimumFractionDigits: 0 })}`,
       icono: <TrendingUp fontSize="small" />,
       color: resumen.saldo >= 0 ? '#2E7D32' : '#C62828'
     },
     {
-      key: 'ticket-promedio',
+  
       titulo: 'Ticket promedio',
       valor: `$${indicadores.ticketPromedio.toLocaleString('es-CL', { minimumFractionDigits: 0 })}`,
       icono: <ReceiptLong fontSize="small" />,
@@ -437,40 +436,28 @@ export default function Reportes() {
               }}
             >
               <Box sx={{ p: 1.25, borderRadius: 2, bgcolor: '#F5F5F5', border: '1px solid #D7CCC8' }}>
-                <IndicadorLabel
-                  label="Operaciones"
-                  tooltip="Cantidad de ventas (operaciones) registradas en el período seleccionado."
-                />
+                <Typography variant="caption" color="text.secondary">Operaciones</Typography>
                 <Typography variant="h6" sx={{ color: '#5D4037', fontWeight: 'bold', lineHeight: 1.15 }}>
                   {resumen.operaciones}
                 </Typography>
               </Box>
 
               <Box sx={{ p: 1.25, borderRadius: 2, bgcolor: '#F5F5F5', border: '1px solid #D7CCC8' }}>
-                <IndicadorLabel
-                  label="Margen"
-                  tooltip="Porcentaje de saldo sobre ingresos: (saldo / ingresos) × 100."
-                />
+                <Typography variant="caption" color="text.secondary">Margen</Typography>
                 <Typography variant="h6" sx={{ color: '#5D4037', fontWeight: 'bold', lineHeight: 1.15 }}>
                   {indicadores.margen.toFixed(1)}%
                 </Typography>
               </Box>
 
               <Box sx={{ p: 1.25, borderRadius: 2, bgcolor: '#F5F5F5', border: '1px solid #D7CCC8' }}>
-                <IndicadorLabel
-                  label="Promedio diario"
-                  tooltip="Ingresos promedio por día dentro del período: ingresos / días del período."
-                />
+                <Typography variant="caption" color="text.secondary">Promedio diario</Typography>
                 <Typography variant="h6" sx={{ color: '#5D4037', fontWeight: 'bold', lineHeight: 1.15 }}>
                   ${indicadores.promedioDiario.toLocaleString('es-CL', { minimumFractionDigits: 0 })}
                 </Typography>
               </Box>
 
               <Box sx={{ p: 1.25, borderRadius: 2, bgcolor: '#F5F5F5', border: '1px solid #D7CCC8' }}>
-                <IndicadorLabel
-                  label="Reinversión"
-                  tooltip="Porcentaje de egresos sobre ingresos: (egresos / ingresos) × 100."
-                />
+                <Typography variant="caption" color="text.secondary">Reinversión</Typography>
                 <Typography variant="h6" sx={{ color: '#5D4037', fontWeight: 'bold', lineHeight: 1.15 }}>
                   {indicadores.reinversion.toFixed(1)}%
                 </Typography>
@@ -645,8 +632,8 @@ export default function Reportes() {
             }
           }}
         >
-          {kpiCards.map(kpi => (
-            <MetricaCompacta key={kpi.key} {...kpi} />
+          {kpiCards.map((kpi, index) => (
+            <MetricaCompacta key={index} {...kpi} />
           ))}
         </Box>
       </Card>
@@ -968,28 +955,6 @@ function GraficoBarrasCategorias({ datos }) {
           </Box>
         );
       })}
-    </Box>
-  );
-}
-
-function IndicadorLabel({ label, tooltip }) {
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-      <Typography variant="caption" color="text.secondary">{label}</Typography>
-      <Tooltip title={tooltip} placement="top" arrow>
-        <Box
-          component="span"
-          sx={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            color: '#8D6E63',
-            cursor: 'help',
-            lineHeight: 0
-          }}
-        >
-          <InfoOutlined sx={{ fontSize: 16 }} />
-        </Box>
-      </Tooltip>
     </Box>
   );
 }

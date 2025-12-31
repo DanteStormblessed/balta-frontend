@@ -1,65 +1,71 @@
-import { apiFetch } from './api';
+// agendamientoService.js
+import { API_BASE_URL } from './config';
 
-const handleJsonResponse = async (response) => {
-  const contentType = response.headers.get('content-type') || '';
-  const text = await response.text();
-  let payload = null;
-
-  if (text) {
-    if (contentType.includes('application/json')) {
-      try {
-        payload = JSON.parse(text);
-      } catch {
-        payload = text;
-      }
-    } else {
-      payload = text;
-    }
-  }
-
-  if (!response.ok) {
-    const message =
-      typeof payload === 'string'
-        ? payload
-        : payload?.message || payload?.error || response.statusText;
-    throw new Error(message || 'Error al procesar la solicitud');
-  }
-
-  return payload;
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('token');
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
 };
 
 export const agendamientoService = {
   getAll: async () => {
     try {
-      const response = await apiFetch('/agendamientos');
-      const data = await handleJsonResponse(response);
+      const response = await fetch(`${API_BASE_URL}/agendamientos`, {
+        headers: getAuthHeaders(),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
       return Array.isArray(data) ? data : [];
     } catch (error) {
       console.error('Error al obtener agendamientos:', error);
-      return [];
+      throw error;
     }
   },
 
   create: async (payload) => {
-    const response = await apiFetch('/agendamientos', {
+    const response = await fetch(`${API_BASE_URL}/agendamientos`, {
       method: 'POST',
+      headers: getAuthHeaders(),
       body: JSON.stringify(payload),
     });
-    return handleJsonResponse(response);
+
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+    return response.json();
   },
 
   update: async (id, payload) => {
-    const response = await apiFetch(`/agendamientos/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/agendamientos/${id}`, {
       method: 'PUT',
+      headers: getAuthHeaders(),
       body: JSON.stringify(payload),
     });
-    return handleJsonResponse(response);
+
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+    return response.json();
   },
 
   remove: async (id) => {
-    const response = await apiFetch(`/agendamientos/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/agendamientos/${id}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
-    return handleJsonResponse(response);
+
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+    return response.json();
   },
 };
