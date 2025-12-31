@@ -1,0 +1,905 @@
+/* Estilos específicos para pantallas con un ancho máximo de 899px */
+@media (max-width: 899px) {
+  :root {
+    --app-topbar-height: 72px;
+    --app-topbar-height-mobile: 72px;
+    --topbar-chip-height: 40px;
+    --topbar-chip-pad-y: 0.1rem;
+    --topbar-chip-pad-x: 0.1rem;
+  }
+
+  /* Ajuste de fuente base para pantallas pequeñas */
+  html {
+    font-size: 16px;
+  }
+
+  .shell{
+    /* Eliminamos el grid y usamos flexbox para el layout móvil */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    width:280px;
+    transform:translateX(-100%);
+    z-index:1200;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .sidebar-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    display:block;
+    z-index:1150;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .sidebar-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .hamburger-btn{
+    display:inline-flex !important; /* Hacemos visible el botón en móvil */
+    align-items:center;
+    justify-content:center;
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  /* Ocultar botón cuando sidebar está abierto */
+  .hamburger-btn.hide {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100px);
+  }
+
+  .page {
+    padding: 1.5rem 1rem;
+  }
+
+  .topbar {
+    padding: 0.6rem 0.75rem;
+    gap: 0.5rem;
+    min-height: 72px;
+    --app-topbar-height: 72px;
+    --app-topbar-height-mobile: 72px;
+  }
+
+  .topbar h1 {
+    font-size: clamp(1rem, 4vw + 0.4rem, 1.3rem);
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
+  }
+
+  /* Compactar botones del topbar en móvil */
+  .topbar .MuiButton-root {
+    min-height: var(--topbar-chip-height) !important;
+    height: var(--topbar-chip-height) !important;
+    padding: 0 0.6rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  .topbar .MuiButton-startIcon,
+  .topbar .MuiButton-endIcon {
+    margin: 0 !important;
+  }
+
+  /* Ocultamos texto de botones responsive para priorizar el título */
+  .topbar .btn-responsive .text {
+    display: none;
+  }
+
+  /* Chip usuario: ocultar rol (segunda línea) en móvil */
+  .topbar .header-profile-chip span:last-child {
+    display: none;
+  }
+
+  /* ===================== */
+  /* Inventario (móvil)    */
+  /* ===================== */
+
+  .inventario-page {
+    gap: 0.85rem;
+  }
+
+  .inventario-page .MuiCardHeader-title {
+    font-size: 1.1rem !important;
+  }
+
+  .inventario-tabs {
+    margin-bottom: 0.85rem !important;
+    gap: 0.4rem !important;
+    flex-wrap: wrap;
+  }
+
+  .inventario-tabs .MuiButton-root {
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 0.75rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .inventario-filtros {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.9rem !important;
+  }
+
+  .inventario-page input,
+  .inventario-page select {
+    height: 42px !important;
+    padding: 0.55rem 0.7rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .inventario-page textarea {
+    padding: 0.55rem 0.7rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .inventario-toolbar {
+    gap: 0.5rem !important;
+    margin-top: 0.75rem !important;
+  }
+
+  .inventario-toolbar .MuiButton-root {
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 0.7rem !important;
+    font-size: 0.88rem !important;
+  }
+
+  .inventario-contador {
+    font-size: 0.8rem !important;
+    white-space: nowrap;
+  }
+
+  /* Tablas Inventario: permitir que el nombre envuelva (evita perder info) */
+  .table-wrap.inventario-table .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(1) {
+    white-space: normal !important;
+    word-break: break-word;
+    min-width: 180px;
+  }
+
+  /* Inventario: tabla más compacta aún en móvil */
+  .table-wrap.inventario-table .MuiTableHead-root .MuiTableCell-head {
+    font-size: 0.7rem !important;
+    padding: 0.35rem 0.45rem !important;
+    letter-spacing: 0 !important;
+  }
+  .table-wrap.inventario-table .MuiTableCell-body {
+    font-size: 0.7rem !important;
+    padding: 0.35rem 0.45rem !important;
+    line-height: 1.15 !important;
+  }
+
+  /* Inventario: acciones en una sola fila, botones más pequeños */
+  .table-wrap.inventario-table .MuiTableCell-root:last-child > div {
+    flex-wrap: nowrap !important;
+    gap: 0.25rem !important;
+  }
+  .table-wrap.inventario-table .MuiTableCell-root:last-child .MuiButton-root {
+    min-width: 0 !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 0.4rem !important;
+  }
+
+  .table-wrap.inventario-table .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:last-of-type {
+    min-width: 120px;
+  }
+
+  /* ===================== */
+  /* Configuración (móvil) */
+  /* ===================== */
+
+  .table-wrap.config-table .MuiTableHead-root .MuiTableCell-head {
+    font-size: 0.7rem !important;
+    padding: 0.35rem 0.45rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  .table-wrap.config-table .MuiTableCell-body {
+    font-size: 0.7rem !important;
+    padding: 0.35rem 0.45rem !important;
+    line-height: 1.15 !important;
+  }
+
+  /* Permitir wrap en columnas de texto (Nombre / Descripción) */
+  .table-wrap.config-table .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(1),
+  .table-wrap.config-table .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(2) {
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* Acciones: una sola fila horizontal, botones más chicos */
+  .table-wrap.config-table .MuiTableCell-root:last-child > div {
+    flex-wrap: nowrap !important;
+    gap: 0.25rem !important;
+    align-items: center;
+  }
+
+  .table-wrap.config-table .MuiTableCell-root:last-child .MuiButton-root {
+    min-width: 0 !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 0.4rem !important;
+  }
+
+  /* ========================= */
+  /* Gestión Usuarios (móvil)  */
+  /* ========================= */
+
+  .gestion-usuarios-page {
+    padding: 0.75rem !important;
+  }
+
+  .gestion-usuarios-title {
+    font-size: 1.1rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .table-wrap.users-table .MuiTableHead-root .MuiTableCell-head {
+    font-size: 0.7rem !important;
+    padding: 0.35rem 0.45rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  .table-wrap.users-table .MuiTableCell-body {
+    font-size: 0.7rem !important;
+    padding: 0.35rem 0.45rem !important;
+    line-height: 1.15 !important;
+  }
+
+  /* Acciones: mantener en una fila, botones pequeños */
+  .table-wrap.users-table .MuiTableCell-root:last-child > div,
+  .table-wrap.users-table .MuiTableCell-root:last-child .users-actions {
+    flex-wrap: nowrap !important;
+    gap: 0.25rem !important;
+    align-items: center;
+  }
+
+  .table-wrap.users-table .MuiTableCell-root:last-child .MuiButton-root {
+    min-width: 0 !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 0.4rem !important;
+  }
+
+  /* Modales de inventario (productos/materiales): más compactos */
+  .inventario-modal-overlay {
+    padding: 0.75rem !important;
+    align-items: flex-start !important;
+  }
+
+  .inventario-modal {
+    padding: 1rem !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    margin-top: 0.75rem;
+  }
+
+  .inventario-modal h3 {
+    font-size: 1.15rem !important;
+  }
+
+  .stack {
+    gap: 1rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field {
+    grid-column: span 1;
+  }
+
+  .topbar .btn-responsive .text {
+    display: none;
+  }
+
+  .topbar .btn-responsive {
+    min-width: 36px;
+    padding: 0 0.5rem;
+  }
+
+  .topbar .btn-responsive .icon,
+  .topbar .btn-responsive .avatar {
+    margin-right: 0 !important;
+    font-size: 1.2rem;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .topbar .btn.hide-on-mobile {
+    padding: 0.75rem;
+  }
+
+  .grid > .card {
+    grid-column: span 12 !important;
+  }
+
+  .stats-grid > .card {
+    min-height: 400px;
+  }
+
+  .chart-placeholder {
+    min-height: 350px;
+  }
+
+  .page {
+    padding: 1.25rem 0.85rem;
+  }
+
+  .dashboard-grid {
+    display: flex !important;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dashboard-grid-item {
+    grid-column: auto !important;
+  }
+
+  .dashboard-card .MuiCardHeader-root {
+    padding: 0.85rem 1rem;
+  }
+
+  .dashboard-card .MuiCardHeader-title {
+    font-size: 1.25rem;
+  }
+
+  .dashboard-card .MuiCardHeader-subheader {
+    font-size: 0.85rem;
+  }
+
+  .dashboard-card .MuiCardContent-root {
+    padding: 1.25rem 1rem;
+  }
+
+  .dashboard-card .stats {
+    gap: 0.75rem;
+  }
+
+  .dashboard-card .stat {
+    padding: 1rem;
+    text-align: left;
+  }
+
+  .dashboard-card .stat::before {
+    height: 2px;
+  }
+
+  .dashboard-card .stat > div:first-child {
+    margin-bottom: 0.75rem;
+  }
+
+  .dashboard-card .stat-label {
+    font-size: 0.85rem;
+  }
+
+  .dashboard-card .stat-value {
+    font-size: 1.6rem;
+  }
+
+  .dashboard-metrics .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-card .stat svg {
+    font-size: 22px !important;
+  }
+
+  .dashboard-card .stat > div > div {
+    width: 44px;
+    height: 44px;
+  }
+
+  .dashboard-card .MuiTableHead-root .MuiTableCell-head {
+    font-size: 0.9rem;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .dashboard-card .MuiTableCell-root {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .dashboard-card .table-wrap {
+    margin: 0 -0.35rem;
+  }
+
+  .dashboard-card .table-wrap .MuiTableCell-root {
+    white-space: nowrap;
+  }
+
+  .dashboard-card .table-wrap .MuiTableCell-root:nth-of-type(2) {
+    max-width: 160px;
+    white-space: normal;
+  }
+
+  .dashboard-recent .table-wrap {
+    max-height: 320px;
+  }
+
+  .dashboard-summary .stats,
+  .dashboard-metrics .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    justify-content: space-between;
+  }
+
+  .dashboard-summary .stat,
+  .dashboard-metrics .stat {
+    flex: 0 1 calc(33.333% - 0.3rem);
+    padding: 0.45rem 0.4rem;
+    border-radius: 8px;
+    /* NUEVO: Convertimos la tarjeta en un contenedor flex vertical */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empuja el ícono arriba y el texto abajo */
+  }
+
+  /* NUEVO: Centramos el texto dentro de su nuevo contenedor */
+  .dashboard-summary .stat > div:last-of-type,
+  .dashboard-metrics .stat > div:last-of-type {
+    text-align: center;
+  }
+
+  .dashboard-summary .stat-label,
+  .dashboard-metrics .stat-label {
+    font-size: 0.62rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .dashboard-summary .stat-value,
+  .dashboard-metrics .stat-value {
+    font-size: 0.95rem !important; /* Forzamos el mismo tamaño de fuente */
+    line-height: 1.1;
+  }
+
+  .dashboard-summary .stat > div:first-child,
+  .dashboard-metrics .stat > div:first-child {
+    margin-bottom: 0.25rem !important; /* Forzamos el mismo margen */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .dashboard-summary .stat > div > div,
+  .dashboard-metrics .stat > div > div {
+    /* Forzamos el tamaño y evitamos que se estire */
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    flex-shrink: 0; /* Evita que el círculo se encoja */
+    
+    /* Aseguramos que sea un círculo perfecto */
+    border-radius: 50% !important;
+    
+    /* Centramos el ícono dentro del círculo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dashboard-summary .stat svg,
+  .dashboard-metrics .stat svg {
+    font-size: 14px !important;
+  }
+
+  .dashboard-card.dashboard-table .table-wrap {
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  .dashboard-card.dashboard-table .MuiTable-root,
+  .dashboard-card.dashboard-table .MuiTableHead-root,
+  .dashboard-card.dashboard-table .MuiTableBody-root,
+  .dashboard-card.dashboard-table .MuiTableRow-root,
+  .dashboard-card.dashboard-table .MuiTableCell-root {
+    display: block;
+    width: 100%;
+  }
+
+  .dashboard-card.dashboard-table .MuiTableHead-root {
+    display: none;
+  }
+
+  .dashboard-card.dashboard-table .MuiTableRow-root {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 10px; /* Un poco más pequeño */
+    padding: 0.55rem 0.6rem;
+    margin-bottom: 0.6rem; /* Reducimos el espacio entre filas */
+    background: rgba(255,255,255,0.04);
+  }
+
+  .dashboard-card.dashboard-table .MuiTableCell-root {
+    font-size: 0.7rem;
+    padding: 0.2rem 0;
+    gap: 0.15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard-card.dashboard-table .MuiTableCell-root::before {
+    font-size: 0.62rem;
+    margin-right: 0;
+  }
+
+  .dashboard-card.dashboard-table .MuiTableCell-root > *:not(::before) {
+    width: 100%;
+    text-align: left;
+    font-size: 0.78rem;
+    word-break: break-word;
+  }
+
+  .dashboard-card.dashboard-table .MuiTableCell-root span[style*="background"] {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* NUEVO: Estilos más compactos para el tag de "Tipo" */
+  .dashboard-card.dashboard-table .MuiTableCell-root span[style*="background"] {
+    padding: 0.2rem 0.5rem !important;
+    font-size: 0.7rem !important;
+    gap: 0.2rem !important;
+  }
+
+  .dashboard-card.dashboard-table .MuiTableCell-root > *:not(::before) {
+    text-align: right;
+    word-break: break-word;
+    overflow-wrap: break-word; 
+    min-width: 0;
+  }
+
+  .dashboard-card.dashboard-table .MuiTableCell-root:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .dashboard-card.dashboard-table .MuiTableBody-root {
+    padding: 0;
+  }
+
+  .dashboard-card.dashboard-table .MuiTableRow-root:last-of-type {
+    margin-bottom: 0;
+  }
+
+  /* --- ESTILOS PARA PÁGINA DE REGISTRAR VENTA --- */
+
+  /* 1. Resumen Financiero (Neto, IVA, etc.) */
+  .resumen-financiero-grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* 2x2 grid */
+    gap: 0.5rem !important;
+  }
+  .resumen-financiero-grid > div {
+    padding: 0.75rem !important;
+    border-radius: 8px !important;
+  }
+  .resumen-financiero-grid > div > div:first-of-type {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  .resumen-financiero-grid > div > div:last-of-type {
+    font-size: 1rem !important;
+  }
+
+  /* 2. Items de Productos y Métodos de Pago */
+  .producto-venta-item,
+  .metodo-pago-item {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* Grid base de 2 columnas */
+    gap: 0.75rem !important;
+    padding: 1rem !important;
+    align-items: flex-end !important;
+  }
+
+  .producto-venta-item > *,
+  .metodo-pago-item > * {
+    grid-column: span 2; /* Por defecto, cada campo ocupa todo el ancho */
+  }
+
+  /* Agrupamos cantidad y precio en la misma fila */
+  .producto-venta-item > div:nth-of-type(2), /* Cantidad */
+  .producto-venta-item > div:nth-of-type(3) { /* Precio */
+    grid-column: span 1;
+  }
+  
+  /* Agrupamos subtotal y botón de eliminar */
+  .producto-venta-item > div:nth-of-type(4), /* Subtotal */
+  .producto-venta-item > button { /* Eliminar */
+    grid-column: span 1;
+  }
+
+  /* Agrupamos monto y botón de eliminar */
+  .metodo-pago-item > div:nth-of-type(2), /* Monto */
+  .metodo-pago-item > button { /* Eliminar */
+    grid-column: span 1;
+  }
+
+  /* 3. Reducción de tamaño de inputs y labels */
+  .producto-venta-item label,
+  .metodo-pago-item label {
+    font-size: 0.8rem !important;
+    height: auto !important;
+    margin-bottom: 0.1rem;
+  }
+
+  .producto-venta-item .MuiOutlinedInput-root,
+  .metodo-pago-item .MuiOutlinedInput-root,
+  .producto-venta-item input,
+  .metodo-pago-item input,
+  .producto-venta-item div[style*="height"],
+  .metodo-pago-item div[style*="height"],
+  .producto-venta-item button,
+  .metodo-pago-item button {
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  .producto-venta-item .MuiInputBase-input,
+  .metodo-pago-item .MuiInputBase-input {
+    font-size: 0.9rem !important;
+    padding: 10px 12px !important;
+  }
+  
+  .producto-venta-item input[type="number"] {
+    width: 100% !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* 4. Botones de acción del formulario */
+  .venta-acciones {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 0.5rem !important;
+    width: 100%;
+  }
+
+  /* Texto de los botones (no iconos) */
+  .venta-acciones > .MuiButton-root,
+  .venta-acciones > button,
+  .venta-acciones > a.MuiButton-root {
+    font-size: 0.7rem !important;   /* Ajusta aquí solo el texto */
+    line-height: 1.1 !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 0.6rem !important;
+  }
+
+  /* Opcional: iconos más pequeños */
+  .venta-acciones > .MuiButton-root .MuiSvgIcon-root,
+  .venta-acciones > button .MuiSvgIcon-root {
+    font-size: 12px !important;
+  }
+
+  /* Opcional: reducir el gap general de la toolbar en móvil */
+  .toolbar {
+    gap: 0.5rem !important;
+  }
+
+  /* Empty states más compactos en móvil */
+  .empty-state {
+    padding: 1rem 0.75rem !important;
+    border-radius: 8px !important;
+  }
+  .empty-state .MuiSvgIcon-root {
+    font-size: 28px !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .empty-state p {
+    font-size: 0.95rem !important;
+    line-height: 0.5 !important;
+    margin: 0 0 0.25rem 0 !important;
+  }
+  .empty-state small {
+    font-size: 0.75rem !important;
+  }
+
+  /* Ventas Recientes: tabla compacta en móvil */
+  .ventas-recientes-card .MuiCardHeader-root {
+    padding: 0.5rem 0.75rem !important;
+  }
+  .ventas-recientes-card .MuiCardHeader-title {
+    font-size: 1rem !important;
+  }
+  .ventas-recientes-card .MuiCardHeader-subheader {
+    font-size: 0.75rem !important;
+  }
+  .ventas-recientes-card .MuiCardContent-root {
+    padding: 0.5rem !important;
+  }
+
+  .table-wrap.ventas-recientes {
+    margin: 0 !important;
+    overflow-x: auto; /* si no entra, permite scroll horizontal */
+  }
+
+  .table-wrap.ventas-recientes .MuiTableHead-root .MuiTableCell-head {
+    font-size: 0.72rem !important;
+    padding: 0.35rem 0.5rem !important;
+    letter-spacing: 0 !important;
+  }
+  .table-wrap.ventas-recientes .MuiTableCell-root {
+    font-size: 0.72rem !important;
+    padding: 0.3rem 0.45rem !important;
+    white-space: nowrap; /* mantener columnas en una línea */
+  }
+  /* Asegurar que el contenido interno reduzca tamaño también */
+  .table-wrap.ventas-recientes .MuiTableCell-root > * {
+    font-size: inherit !important;
+    line-height: 1.1 !important;
+  }
+
+  /* Botones dentro de la tabla aún más pequeños */
+  .table-wrap.ventas-recientes .MuiButton-root {
+    min-width: 0 !important;
+    padding: 0.18rem 0.35rem !important;
+    font-size: 0.68rem !important;
+    height: auto !important;
+  }
+
+  /* Limitar ancho de columnas largas con elipsis para ver más columnas a la vez */
+  .table-wrap.ventas-recientes .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(2), /* Productos */
+  .table-wrap.ventas-recientes .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(7) { /* Métodos de Pago */
+    max-width: 120px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Reducir el tamaño del "Bruto" que venía más grande en desktop */
+  .table-wrap.ventas-recientes .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(6) > * {
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+  }
+
+  /* Anchuras mínimas sugeridas para que quepan más columnas */
+  .table-wrap.ventas-recientes .MuiTableCell-root:nth-of-type(1) { min-width: 78px; }  /* Fecha */
+  .table-wrap.ventas-recientes .MuiTableCell-root:nth-of-type(3) { min-width: 68px; text-align: right; }
+  .table-wrap.ventas-recientes .MuiTableCell-root:nth-of-type(4) { min-width: 62px; text-align: right; }
+  .table-wrap.ventas-recientes .MuiTableCell-root:nth-of-type(5) { min-width: 70px; text-align: right; }
+  .table-wrap.ventas-recientes .MuiTableCell-root:nth-of-type(6) { min-width: 78px; text-align: right; }
+  .table-wrap.ventas-recientes .MuiTableCell-root:nth-of-type(8) { min-width: 86px; }
+
+  /* Ajustar bordes/paddings de cabecera para compactar más */
+  .table-wrap.ventas-recientes .MuiTable-root {
+    border-radius: 10px;
+  }
+
+  /* Fila se expande en altura y celdas alineadas arriba */
+  .table-wrap.ventas-recientes .MuiTableRow-root {
+    height: auto !important;
+  }
+  .table-wrap.ventas-recientes .MuiTableCell-root {
+    vertical-align: top !important;
+  }
+
+  /* En móvil: solo estas columnas envuelven el texto (2=Productos, 7=Métodos, 8=Obs.) */
+  .table-wrap.ventas-recientes .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(2),
+  .table-wrap.ventas-recientes .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(7),
+  .table-wrap.ventas-recientes .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(8) {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    max-width: none !important;
+    line-height: 1.15 !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* Movimientos Recientes (Dashboard): tabla compacta + wrap en Descripción */
+  .dashboard-recent .MuiCardHeader-root {
+    padding: 0.5rem 0.75rem !important;
+  }
+  .dashboard-recent .MuiCardHeader-title {
+    font-size: 1rem !important;
+  }
+  .dashboard-recent .MuiCardHeader-subheader {
+    font-size: 0.75rem !important;
+  }
+  .dashboard-recent .MuiCardContent-root {
+    padding: 0.5rem !important;
+  }
+
+  .table-wrap.dashboard-movimientos {
+    margin: 0 !important;
+    overflow-x: auto; /* si no entra, permite scroll */
+  }
+
+  .table-wrap.dashboard-movimientos .MuiTableHead-root .MuiTableCell-head {
+    font-size: 0.72rem !important;
+    padding: 0.35rem 0.5rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  .table-wrap.dashboard-movimientos .MuiTableRow-root {
+    height: auto !important; /* permite crecer en altura */
+  }
+  .table-wrap.dashboard-movimientos .MuiTableCell-root {
+    font-size: 0.72rem !important;
+    padding: 0.3rem 0.45rem !important;
+    white-space: nowrap;         /* por defecto, una línea */
+    vertical-align: top !important;
+  }
+  .table-wrap.dashboard-movimientos .MuiTableCell-root > * {
+    font-size: inherit !important;
+    line-height: 1.1 !important;
+  }
+
+  /* Descripción (columna 2) envuelve texto y expande fila */
+  .table-wrap.dashboard-movimientos .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-of-type(2) {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    line-height: 1.15 !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* Alineaciones y anchos mínimos para ver más columnas */
+  .table-wrap.dashboard-movimientos .MuiTableCell-root:nth-of-type(1) { min-width: 78px; }   /* Fecha */
+  .table-wrap.dashboard-movimientos .MuiTableCell-root:nth-of-type(3) { 
+    min-width: 70px; 
+    text-align: right; 
+  } /* Monto */
+  .table-wrap.dashboard-movimientos .MuiTableCell-root:nth-of-type(4) { min-width: 84px; }   /* Tipo */
+
+  /* Tag Tipo más compacto en móvil (override a inline style) */
+  .table-wrap.dashboard-movimientos .tipo-tag {
+    padding: 0.2rem 0.5rem !important;
+    font-size: 0.7rem !important;
+    gap: 0.2rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  /* Botones dentro de la tabla, si existieran */
+  .table-wrap.dashboard-movimientos .MuiButton-root {
+    min-width: 0 !important;
+    padding: 0.18rem 0.35rem !important;
+    font-size: 0.68rem !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-grid > .card {
+    min-height: 350px;
+  }
+  
+  .chart-placeholder {
+    min-height: 300px;
+  }
+  
+  .page {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,13 @@
+# Node
+node_modules/
+npm-debug.log*
+pnpm-lock.yaml
+yarn.lock
+
+# Vite
+dist/
+.vite/
+
+# Editor
+.DS_Store
+.vscode/

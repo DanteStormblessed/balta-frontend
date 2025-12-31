@@ -1,0 +1,310 @@
+.periodo-toolbar-wrapper {
+  position: sticky;
+  top: calc(var(--app-topbar-height, 96px) + 8px);
+  z-index: 15;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 899px) {
+  .periodo-toolbar-wrapper {
+    top: calc(var(--app-topbar-height-mobile, 72px) + 8px);
+  }
+}
+
+.periodo-toolbar-card {
+  background: linear-gradient(135deg, #5D4037, #8D6E63) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 12px 24px rgba(93, 64, 55, 0.25) !important;
+  color: #fff !important;
+}
+
+.periodo-toolbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding: 0.75rem 1.05rem !important;
+}
+
+.periodo-toolbar-info {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.periodo-toolbar-icon {
+  font-size: 1.85rem !important;
+  color: #fff !important;
+}
+
+.periodo-toolbar-eyebrow {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+  margin-bottom: 0.1rem !important;
+}
+
+.periodo-toolbar-title {
+  color: #fff !important;
+  font-size: clamp(1.05rem, 0.8vw + 0.75rem, 1.25rem) !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  line-height: 1.1 !important;
+}
+
+.periodo-toolbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.periodo-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+/* Botones extra (filtros / excel) lo más compactos posible */
+.periodo-toolbar-actions .MuiButton-root {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  color: #fff !important;
+  padding: 0.18rem 0.55rem !important;
+  font-size: 0.74rem !important;
+  min-width: 0 !important;
+  line-height: 1.05 !important;
+}
+
+.periodo-toolbar-actions .MuiButton-root:hover {
+  border-color: #fff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.periodo-toolbar-actions .MuiSvgIcon-root {
+  font-size: 0.95rem !important;
+}
+
+.periodo-toolbar-actions .MuiButton-startIcon,
+.periodo-toolbar-actions .MuiButton-endIcon {
+  margin-left: 0 !important;
+  margin-right: 0.2rem !important;
+}
+
+.periodo-toolbar-chip {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  padding: 0 0.5rem !important;
+  height: 28px !important;
+}
+
+.periodo-toolbar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.periodo-toolbar-buttons .MuiButton-root {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  color: #fff !important;
+  padding: 0.28rem 0.75rem !important;
+  font-size: 0.78rem !important;
+  min-width: 0 !important;
+}
+
+.periodo-toolbar-buttons .MuiButton-root:hover {
+  border-color: #fff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.periodo-toolbar-buttons .MuiSvgIcon-root {
+  font-size: 1rem !important;
+}
+
+.periodo-toolbar-footer {
+  padding: 0 1.05rem 0.85rem;
+}
+
+.periodo-toolbar-footer-panel {
+  border-radius: 12px;
+  padding: 0.55rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+/* Controles dentro del footer (compactos y legibles en fondo oscuro) */
+.periodo-toolbar-footer-panel .MuiInputLabel-root {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.72rem !important;
+}
+
+.periodo-toolbar-footer-panel .MuiInputBase-root {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.periodo-toolbar-footer-panel .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.periodo-toolbar-footer-panel .MuiSvgIcon-root {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.periodo-toolbar-footer-panel .MuiInputBase-input {
+  padding: 0.38rem 0.55rem !important;
+  font-size: 0.82rem !important;
+}
+
+@media (max-width: 899px) {
+  .periodo-toolbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.55rem 0.75rem !important;
+    gap: 0.6rem;
+  }
+
+  .periodo-toolbar-info {
+    gap: 0.25rem;
+  }
+
+  .periodo-toolbar-icon {
+    font-size: 0.35rem !important;
+  }
+
+  .periodo-toolbar-eyebrow {
+    font-size: 0.15rem !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .periodo-toolbar-title {
+    font-size: 0.2rem !important;
+  }
+
+  .periodo-toolbar-controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .periodo-toolbar-buttons {
+    flex: 1;
+    justify-content: flex-end;
+    gap: 0.25rem;
+  }
+
+  .periodo-toolbar-chip {
+    height: 14px !important;
+    font-size: 0.1rem !important;
+    padding: 0 0.4rem !important;
+  }
+
+  .periodo-toolbar-buttons .MuiButton-root {
+    padding: 0.18rem 0.55rem !important;
+    font-size: 0.1rem !important;
+    min-width: 0 !important;
+    line-height: 1.05 !important;
+  }
+
+  .periodo-toolbar-buttons .MuiSvgIcon-root {
+    font-size: 0.9rem !important;
+  }
+
+  .periodo-toolbar-actions {
+    gap: 0.25rem;
+  }
+
+  .periodo-toolbar-actions .MuiButton-root {
+    padding: 0.14rem 0.45rem !important;
+    font-size: 0.1rem !important;
+    min-width: 0 !important;
+    line-height: 1.05 !important;
+  }
+
+  .periodo-toolbar-actions .MuiSvgIcon-root {
+    font-size: 0.88rem !important;
+  }
+
+  .periodo-toolbar-footer {
+    padding: 0 0.9rem 0.85rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .periodo-toolbar-wrapper {
+    margin-bottom: 0.6rem;
+  }
+
+  .periodo-toolbar-card {
+    border-radius: 12px !important;
+  }
+
+  .periodo-toolbar-content {
+    padding: 0.5rem 0.65rem !important;
+    gap: 0.55rem;
+  }
+
+  .periodo-toolbar-title {
+    font-size: 0.95rem !important;
+  }
+
+  .periodo-toolbar-chip {
+    height: 22px !important;
+    font-size: 0.72rem !important;
+  }
+
+  .periodo-toolbar-buttons .MuiButton-root {
+    padding: 0.16rem 0.45rem !important;
+    font-size: 0.18rem !important;
+  }
+
+  .periodo-toolbar-actions .MuiButton-root {
+    padding: 0.12rem 0.4rem !important;
+    font-size: 0.16rem !important;
+  }
+
+  .periodo-toolbar-footer {
+    padding: 0 0.65rem 0.75rem;
+  }
+}
+
+@media (max-width: 1280px) {
+  .periodo-toolbar-wrapper {
+    margin-bottom: 0.85rem;
+  }
+
+  .periodo-toolbar-content {
+    padding: 0.65rem 0.9rem !important;
+    gap: 0.7rem;
+  }
+
+  .periodo-toolbar-icon {
+    font-size: 1.6rem !important;
+  }
+
+  .periodo-toolbar-title {
+    font-size: 1.05rem !important;
+  }
+
+  .periodo-toolbar-chip {
+    height: 26px !important;
+    font-size: 0.8rem !important;
+  }
+
+  .periodo-toolbar-buttons .MuiButton-root {
+    padding: 0.25rem 0.65rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .periodo-toolbar-actions .MuiButton-root {
+    padding: 0.16rem 0.5rem !important;
+    font-size: 0.76rem !important;
+  }
+
+  .periodo-toolbar-footer {
+    padding: 0 0.9rem 0.8rem;
+  }
+}
