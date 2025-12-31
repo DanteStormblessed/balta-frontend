@@ -40,13 +40,10 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
 
-          # Fuente del proyecto (solo para que el action encuentre estructura)
-          app_location: "Frontendd"
+          # Subir SOLO el build final
+          app_location: "Frontendd/dist"
           api_location: ""
-
-          # IMPORTANTES: no usar Oryx build, subir el dist ya compilado
           skip_app_build: true
-          app_artifact_location: "dist"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -58,3 +55,4 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_POND_0BCA16710 }}
           action: "close"
+
