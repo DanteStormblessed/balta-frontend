@@ -252,10 +252,12 @@ export default function Reportes() {
       const hasta = dateToYearMonth(periodoActivo.fin);
       const url = `${API_BASE_URL}/estadisticas/reporte-mensual/detallado?desde=${encodeURIComponent(desde)}&hasta=${encodeURIComponent(hasta)}`;
 
+      const token = localStorage.getItem('token');
       const res = await fetch(url, {
         method: 'GET',
         headers: {
-          Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          ...(token && { Authorization: `Bearer ${token}` })
         }
       });
 

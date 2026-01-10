@@ -9,6 +9,18 @@ const getAuthHeaders = () => {
   };
 };
 
+const parseResponseBody = async (response) => {
+  if (response.status === 204) return null;
+
+  const contentType = response.headers.get('content-type') || '';
+  if (contentType.includes('application/json')) {
+    return response.json();
+  }
+
+  const text = await response.text();
+  return text ? text : null;
+};
+
 export const agendamientoService = {
   getAll: async () => {
     try {
@@ -66,6 +78,6 @@ export const agendamientoService = {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
 
-    return response.json();
+    return parseResponseBody(response);
   },
 };

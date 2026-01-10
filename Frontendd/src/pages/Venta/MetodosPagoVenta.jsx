@@ -257,7 +257,7 @@ export default function MetodosPagoVenta({
             fontSize: '1.1rem'
           }}>
             {Math.abs(montoRestante) < 0.01 ? 
-              '✓ Montos perfectamente balanceados' : 
+              '✓ Montos balanceados' : 
               `Monto restante: $${Math.abs(montoRestante).toLocaleString('es-CL', { minimumFractionDigits: 2 })}`
             }
           </div>

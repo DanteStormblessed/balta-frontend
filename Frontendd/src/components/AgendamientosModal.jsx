@@ -77,11 +77,14 @@ const parseDateOnly = (value) => {
 export default function AgendamientosModal({ open, onClose }) {
   const [viewDate, setViewDate] = useState(() => normalizeDate(new Date()));
   const [selectedDate, setSelectedDate] = useState(() => normalizeDate(new Date()));
+  const todayKey = useMemo(() => toDateKey(normalizeDate(new Date())), []);
   const [agendamientos, setAgendamientos] = useState([]);
   const [productos, setProductos] = useState([]);
   const [productoMenuOpen, setProductoMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [form, setForm] = useState(() => initialFormState());
@@ -109,6 +112,8 @@ export default function AgendamientosModal({ open, onClose }) {
     if (!open) {
       setError(null);
       setSuccess(null);
+      setDeleteConfirm(null);
+      setDeleteLoading(false);
       setForm(initialFormState());
       return;
     }
@@ -260,6 +265,41 @@ export default function AgendamientosModal({ open, onClose }) {
     }
   };
 
+  const requestDelete = (evento) => {
+    const id = evento?.idAgendamiento;
+    if (!id) {
+      setSuccess(null);
+      setError('Este agendamiento no tiene identificador y no se puede eliminar.');
+      return;
+    }
+
+    setError(null);
+    setSuccess(null);
+    setDeleteConfirm({
+      id,
+      titulo: evento?.titulo || 'Agendamiento'
+    });
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteConfirm?.id) return;
+    setDeleteLoading(true);
+    setError(null);
+    try {
+      await api.agendamientos.remove(deleteConfirm.id);
+      setAgendamientos((prev) => prev.filter((item) => String(item?.idAgendamiento) !== String(deleteConfirm.id)));
+      loadAgendamientos();
+      setSuccess('Agendamiento eliminado correctamente.');
+    } catch (err) {
+      console.error('Error eliminando agendamiento', err);
+      setError(err.message || 'No fue posible eliminar el agendamiento');
+      setSuccess(null);
+    } finally {
+      setDeleteLoading(false);
+      setDeleteConfirm(null);
+    }
+  };
+
   if (!open) {
     return null;
   }
@@ -296,12 +336,13 @@ export default function AgendamientosModal({ open, onClose }) {
                 const key = toDateKey(day.date);
                 const eventos = agendamientosPorDia[key] || [];
                 const isActive = key === selectedDateKey;
+                const isToday = key === todayKey;
                 const hasEvents = eventos.length > 0;
                 return (
                   <button
                     type="button"
                     key={key}
-                    className={`calendar-cell${day.inCurrentMonth ? '' : ' faded'}${isActive ? ' active' : ''}${hasEvents ? ' has-events' : ''}`}
+                    className={`calendar-cell${day.inCurrentMonth ? '' : ' faded'}${isToday ? ' today' : ''}${isActive ? ' active' : ''}${hasEvents ? ' has-events' : ''}`}
                     onClick={() => handleDayClick(day)}
                   >
                     <span>{day.label}</span>
@@ -331,11 +372,35 @@ export default function AgendamientosModal({ open, onClose }) {
                   ? entrega.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' })
                   : 'Hora sin definir';
                 const productoLabel = evento.producto?.nombre || evento.productoNombre;
+                const canDelete = Boolean(evento?.idAgendamiento);
                 return (
                   <article
                     key={evento.idAgendamiento || `${evento.titulo}-${evento.fechaProgramada}`}
                     className="event-card"
                   >
+                    {canDelete && (
+                      <button
+                        type="button"
+                        className="event-delete"
+                        aria-label="Eliminar agendamiento"
+                        title="Eliminar"
+                        onClick={() => requestDelete(evento)}
+                      >
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M9 3h6l1 2h5v2H3V5h5l1-2Zm1 7h2v9h-2v-9Zm4 0h2v9h-2v-9ZM7 10h2v9H7v-9Zm-1-1h12l-1 13H7L6 9Z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </button>
+                    )}
                     <div>
                       <strong>{evento.titulo}</strong>
                       <p>{evento.descripcion || 'Sin descripción'}</p>
@@ -439,6 +504,37 @@ export default function AgendamientosModal({ open, onClose }) {
           )}
         </div>
       </div>
+
+      {deleteConfirm && (
+        <div
+          className="agendamientos-confirm-overlay"
+          onClick={() => (deleteLoading ? null : setDeleteConfirm(null))}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="agendamientos-confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <h4>Eliminar agendamiento</h4>
+            <p>¿Seguro que deseas eliminar “{deleteConfirm.titulo}”?</p>
+            <div className="agendamientos-confirm-actions">
+              <Button
+                variant="ghost"
+                small
+                disabled={deleteLoading}
+                onClick={() => setDeleteConfirm(null)}
+              >
+                Cancelar
+              </Button>
+              <Button
+                small
+                disabled={deleteLoading}
+                onClick={confirmDelete}
+              >
+                {deleteLoading ? 'Eliminando…' : 'Eliminar'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

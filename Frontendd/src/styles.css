@@ -945,6 +945,32 @@ table.table tbody tr:nth-child(even){
   }
 }
 
+@media (max-width: 899px) {
+  .agendamientos-overlay {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .agendamientos-modal {
+    height: auto;
+    max-height: none;
+  }
+
+  .agendamientos-body {
+    overflow: visible;
+  }
+
+  .agendamientos-events {
+    height: auto;
+    overflow: visible;
+  }
+
+  .event-list {
+    overflow: visible;
+  }
+}
+
 .agendamientos-calendar {
   padding: 1rem;
   border-radius: 14px;
@@ -1011,6 +1037,15 @@ table.table tbody tr:nth-child(even){
   border: 2px solid rgba(93, 64, 55, 0.55);
   background: linear-gradient(180deg, rgba(93, 64, 55, 0.08), transparent 55%) var(--panel);
   box-shadow: 0 6px 16px rgba(93, 64, 55, 0.16);
+}
+
+.calendar-cell.today {
+  border: 2px dashed var(--brand-2);
+  background: rgba(93, 64, 55, 0.05);
+}
+
+.calendar-cell.today.active {
+  border-style: solid;
 }
 
 .calendar-cell span {
@@ -1132,9 +1167,9 @@ table.table tbody tr:nth-child(even){
 }
 
 .event-delete {
-  border: 1px solid var(--border);
+  border: 1px solid rgba(244, 67, 54, 0.55);
   background: transparent;
-  color: var(--text);
+  color: var(--error);
   width: 26px;
   height: 26px;
   border-radius: 8px;
@@ -1150,8 +1185,8 @@ table.table tbody tr:nth-child(even){
 }
 
 .event-delete:hover {
-  background: rgba(244, 67, 54, 0.08);
-  border-color: rgba(244, 67, 54, 0.35);
+  background: rgba(244, 67, 54, 0.12);
+  border-color: rgba(244, 67, 54, 0.75);
   color: var(--error);
 }
 
